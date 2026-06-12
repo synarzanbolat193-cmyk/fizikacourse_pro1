@@ -1,0 +1,601 @@
+<!DOCTYPE html>
+<html lang="kk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>PhysicsPro | Физика курсы</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+        }
+        body {
+            background: linear-gradient(135deg, #e0f2fe, #fef9c3);
+            min-height: 100vh;
+            padding: 16px;
+        }
+        .main-app {
+            max-width: 550px;
+            margin: 0 auto;
+        }
+        .header {
+            background: #0284c7;
+            border-radius: 32px;
+            padding: 16px 20px;
+            margin-bottom: 16px;
+        }
+        .header h1 {
+            color: white;
+            font-size: 1.5rem;
+            text-align: center;
+        }
+        .progress-card {
+            background: white;
+            border-radius: 28px;
+            padding: 16px;
+            margin-bottom: 16px;
+            border: 1px solid #facc15;
+        }
+        .progress-bar {
+            background: #e2e8f0;
+            border-radius: 20px;
+            height: 12px;
+            margin: 8px 0;
+        }
+        .progress-fill {
+            background: #0284c7;
+            width: 0%;
+            height: 12px;
+            border-radius: 20px;
+        }
+        .module-card {
+            background: white;
+            border-radius: 28px;
+            margin-bottom: 16px;
+            border: 1px solid #facc15;
+            overflow: hidden;
+        }
+        .module-title {
+            background: #fef9c3;
+            padding: 16px 20px;
+            font-weight: bold;
+            font-size: 18px;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+        }
+        .module-progress {
+            background: #0284c7;
+            color: white;
+            padding: 4px 12px;
+            border-radius: 40px;
+            font-size: 13px;
+        }
+        .module-content {
+            display: none;
+            padding: 16px;
+            background: #f8fafc;
+        }
+        .topic {
+            background: white;
+            border-radius: 24px;
+            margin-bottom: 16px;
+            padding: 16px;
+            border: 1px solid #e2e8f0;
+        }
+        .topic-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+        }
+        .topic-title {
+            font-weight: bold;
+            font-size: 16px;
+            color: #0c4a6e;
+        }
+        .topic-check {
+            width: 24px;
+            height: 24px;
+            cursor: pointer;
+            accent-color: #facc15;
+        }
+        .topic-detail {
+            display: none;
+            margin-top: 16px;
+            padding-top: 16px;
+            border-top: 1px dashed #fde047;
+        }
+        .theory {
+            background: #e0f2fe;
+            padding: 16px;
+            border-radius: 20px;
+            margin: 12px 0;
+            font-size: 14px;
+            line-height: 1.6;
+        }
+        .formula {
+            background: #fef9c3;
+            padding: 12px;
+            border-radius: 16px;
+            margin: 10px 0;
+            text-align: center;
+            font-family: monospace;
+            font-size: 15px;
+            font-weight: bold;
+            border-left: 5px solid #0284c7;
+        }
+        .task, .test {
+            background: #fef9c3;
+            padding: 14px;
+            border-radius: 20px;
+            margin: 12px 0;
+        }
+        .task input {
+            padding: 10px 16px;
+            border-radius: 40px;
+            border: 1px solid #facc15;
+            width: 60%;
+            margin-right: 10px;
+            font-size: 14px;
+        }
+        .task button, .test button {
+            background: #0284c7;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 40px;
+            color: white;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        .test-option {
+            margin: 10px 0;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .test-option input {
+            width: 20px;
+            height: 20px;
+        }
+        .formulas-gallery {
+            background: white;
+            border-radius: 28px;
+            padding: 16px;
+            margin-top: 20px;
+            border: 1px solid #facc15;
+        }
+        .formula-item {
+            background: #e0f2fe;
+            padding: 12px;
+            border-radius: 18px;
+            margin: 8px 0;
+            font-family: monospace;
+            font-size: 13px;
+        }
+        .calc-card {
+            background: white;
+            border-radius: 28px;
+            padding: 16px;
+            margin-top: 16px;
+            border: 1px solid #facc15;
+        }
+        .calc-card input {
+            width: 100%;
+            padding: 14px;
+            border-radius: 40px;
+            border: 1px solid #facc15;
+            font-size: 16px;
+        }
+        .calc-card button {
+            width: 100%;
+            padding: 12px;
+            background: #facc15;
+            border: none;
+            border-radius: 40px;
+            margin-top: 10px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        footer {
+            text-align: center;
+            padding: 24px;
+            font-size: 12px;
+            color: #475569;
+        }
+        .feedback-success { color: #15803d; margin-top: 8px; font-size: 13px; }
+        .feedback-error { color: #dc2626; margin-top: 8px; font-size: 13px; }
+        .reset-btn {
+            background: #facc15;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 40px;
+            font-weight: bold;
+            margin-bottom: 16px;
+            cursor: pointer;
+        }
+        .reset-container {
+            text-align: right;
+            margin-bottom: 8px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="main-app">
+    <div class="header">
+        <h1>⚛️ PhysicsPro | Физика курсы</h1>
+    </div>
+
+    <div class="reset-container">
+        <button class="reset-btn" id="resetProgressBtn">🔄 Прогресті нөлдеу</button>
+    </div>
+
+    <div class="progress-card">
+        <p>📊 Жалпы прогресс</p>
+        <div class="progress-bar"><div id="globalFill" class="progress-fill"></div></div>
+        <span id="globalPercent">0%</span>
+    </div>
+
+    <div id="modulesContainer"></div>
+
+    <div class="formulas-gallery">
+        <h3 style="color:#0284c7;">📖 Барлық формулалар жинағы</h3>
+        <div id="formulasList"></div>
+    </div>
+
+    <div class="calc-card">
+        <p>🧮 Калькулятор</p>
+        <input type="text" id="calcInput" placeholder="мысалы: 25*4+3">
+        <button id="calcBtn">Есептеу =</button>
+        <div id="calcResult" style="margin-top: 10px; font-weight: bold;"></div>
+    </div>
+
+    <footer>Физика курсы • 7-11 сынып • Әр тақырыпта теория, формулалар, тапсырмалар және 5 тест сұрағы</footer>
+</div>
+
+<script>
+// ===================== МОДУЛЬДЕР =====================
+const modulesData = {
+    "Механика": {
+        topics: [
+            {
+                name: "Кинематика",
+                theory: "Кинематика – қозғалысты себебін қарастырмай, тек геометриялық сипаттайды.\n\n• Жылдамдық (v) – дененің қозғалыс жылдамдығы. v = S/t (м/с)\n• Үдеу (a) – жылдамдықтың өзгеру жылдамдығы. a = (v - v₀)/t (м/с²)\n• Бірқалыпты үдемелі қозғалыс: v = v₀ + at, S = v₀t + at²/2",
+                formulas: ["v = S / t", "a = (v - v₀) / t", "v = v₀ + a·t", "S = v₀·t + (a·t²)/2", "v² - v₀² = 2·a·S"],
+                task: { q: "Автомобиль 20 м/с жылдамдықпен 5 секунд жүрсе, қашықтық неге тең? (м)", ans: 100 },
+                tests: [
+                    { q: "Бірқалыпты қозғалыста жылдамдық қалай өзгереді?", opts: ["Артады", "Кемиді", "Тұрақты", "Нөлге тең"], correct: 2 },
+                    { q: "Үдеу формуласы қандай?", opts: ["a = v/t", "a = S/t", "a = (v-v₀)/t", "a = v·t"], correct: 2 },
+                    { q: "Автомобиль 10 м/с жылдамдықпен 10 секунд жүрсе, жолы қанша?", opts: ["50 м", "100 м", "150 м", "200 м"], correct: 1 },
+                    { q: "Еркін түсу үдеуі неге тең?", opts: ["5 м/с²", "9.8 м/с²", "15 м/с²", "20 м/с²"], correct: 1 },
+                    { q: "Бірқалыпты үдемелі қозғалыста v = v₀ + ... ?", opts: ["a·t", "a·t²", "a·t/2", "a/t"], correct: 0 }
+                ]
+            },
+            {
+                name: "Ньютон заңдары",
+                theory: "• 1-заң (Инерция заңы): денеге күш әсер етпесе, ол тыныштық немесе бірқалыпты қозғалыс күйін сақтайды.\n• 2-заң: F = m·a – күш масса мен үдеудің көбейтіндісіне тең.\n• 3-заң: F₁₂ = -F₂₁ – әсер ету күші тең және қарама-қарсы.",
+                formulas: ["F = m·a", "P = m·g (салмақ)", "F_үйкеліс = μ·N"],
+                task: { q: "Массасы 5 кг денеге 20 Н күш әсер етсе, үдеуі неге тең? (м/с²)", ans: 4 },
+                tests: [
+                    { q: "Ньютонның 2-заңының формуласы?", opts: ["F = ma", "F = mg", "F = μN", "p = mv"], correct: 0 },
+                    { q: "Инерция дегеніміз не?", opts: ["Тыныштық сақтау", "Қозғалу", "Ауырлық", "Күш әсері"], correct: 0 },
+                    { q: "Күш пен үдеудің бағыты қалай?", opts: ["Қарама-қарсы", "Бірдей", "Перпендикуляр", "Байланысы жоқ"], correct: 1 },
+                    { q: "Масса 2 кг, күш 10 Н. Үдеу неге тең?", opts: ["2 м/с²", "5 м/с²", "10 м/с²", "20 м/с²"], correct: 1 },
+                    { q: "Ньютонның 3-заңы бойынша күштер...", opts: ["Тең, қарама-қарсы", "Тең, бір бағытты", "Әртүрлі", "Нөлге тең"], correct: 0 }
+                ]
+            },
+            {
+                name: "Бүкіләлемдік тартылыс заңы",
+                theory: "• Бүкіләлемдік тартылыс заңы: барлық денелер бір-бірін тартады.\n• Тартылыс күші массалардың көбейтіндісіне тура пропорционал, арақашықтықтың квадратына кері пропорционал.\n• Жер бетіндегі ауырлық күші: F = m·g, g = 9.8 м/с²",
+                formulas: ["F = G·m₁·m₂ / r²", "G = 6.67 × 10⁻¹¹ Н·м²/кг²", "g = 9.8 м/с²", "F = m·g"],
+                task: { q: "Массаны 2 есе арттырса, тартылыс күші неше есе өзгереді?", ans: 4 },
+                tests: [
+                    { q: "Тартылыс тұрақтысы G неге тең?", opts: ["6.67·10⁻¹¹", "9.8", "3·10⁸", "1.38·10⁻²³"], correct: 0 },
+                    { q: "Масса 2 есе, арақашықтық 2 есе артса, тартылыс күші?", opts: ["2 есе артады", "2 есе кемиді", "өзгермейді", "4 есе артады"], correct: 2 },
+                    { q: "Жер бетіндегі g неге тең?", opts: ["5 м/с²", "9.8 м/с²", "15 м/с²", "20 м/с²"], correct: 1 },
+                    { q: "Бірінші ғарыштық жылдамдық шамамен?", opts: ["7.9 км/с", "3 км/с", "11.2 км/с", "15 км/с"], correct: 0 },
+                    { q: "Ауырлық күшінің формуласы?", opts: ["F = mg", "F = ma", "F = μN", "F = kx"], correct: 0 }
+                ]
+            }
+        ]
+    },
+    "Электр": {
+        topics: [
+            {
+                name: "Ом заңы",
+                theory: "• Ом заңы: өткізгіштегі ток күші кернеуге тура пропорционал, кедергіге кері пропорционал.\n• Кедергі: R = ρ·l/S. Қуат: P = U·I = I²·R = U²/R\n• Тізбектей қосу: R = R₁ + R₂. Параллель қосу: 1/R = 1/R₁ + 1/R₂",
+                formulas: ["I = U / R", "R = ρ·l / S", "P = U·I", "U = I·R"],
+                task: { q: "Кернеу 12 В, кедергі 4 Ом. Ток күші? (А)", ans: 3 },
+                tests: [
+                    { q: "Ом заңының формуласы?", opts: ["I = U/R", "U = IR", "R = U/I", "Барлығы дұрыс"], correct: 3 },
+                    { q: "Кедергінің формуласы?", opts: ["R = ρ·l/S", "R = S/ρ·l", "R = U·I", "R = I/U"], correct: 0 },
+                    { q: "Кернеу 220 В, кедергі 110 Ом. Ток күші?", opts: ["0.5 А", "1 А", "2 А", "3 А"], correct: 2 },
+                    { q: "Қуаттың формуласы?", opts: ["P = U·I", "P = I²R", "P = U²/R", "Барлығы дұрыс"], correct: 3 },
+                    { q: "Тізбектей қосқанда жалпы кедергі?", opts: ["R₁+R₂", "1/R₁+1/R₂", "R₁·R₂", "өзгермейді"], correct: 0 }
+                ]
+            },
+            {
+                name: "Магнит өрісі",
+                theory: "• Магнит өрісі токты өткізгіштердің айналасында пайда болады.\n• Ампер күші: F = B·I·l·sinα\n• Лоренц күші: F_Л = q·v·B·sinα\n• Сол қол ережесі күштің бағытын анықтайды",
+                formulas: ["F = B·I·l·sinα", "F_Л = q·v·B·sinα", "Φ = B·S·cosα (магнит ағыны)"],
+                task: { q: "B=0.2 Тл, I=3 A, l=0.5 м, α=90°. Ампер күші? (Н)", ans: 0.3 },
+                tests: [
+                    { q: "Ампер күшінің формуласы?", opts: ["F = BIl sinα", "F = qvB", "F = ma", "F = mg"], correct: 0 },
+                    { q: "Лоренц күші қай бөлшекке әсер етеді?", opts: ["Токқа", "Зарядталған бөлшекке", "Магнитке", "Өткізгішке"], correct: 1 },
+                    { q: "Магнит индукциясының өлшем бірлігі?", opts: ["Тесла", "Вольт", "Ампер", "Ом"], correct: 0 },
+                    { q: "Сол қол ережесі не үшін қолданылады?", opts: ["Ток бағытын", "Күш бағытын", "Өріс бағытын", "Жылдамдықты"], correct: 1 },
+                    { q: "B=0.5 Тл, I=2 A, l=0.3 м, α=90°. F?", opts: ["0.1 Н", "0.2 Н", "0.3 Н", "0.4 Н"], correct: 2 }
+                ]
+            }
+        ]
+    },
+    "Оптика": {
+        topics: [
+            {
+                name: "Шағылу және сыну",
+                theory: "• Шағылу заңы: түсу бұрышы шағылу бұрышына тең (α = β).\n• Сыну заңы (Снеллиус): sinα/sinγ = n₂/n₁\n• Сыну көрсеткіші: n = c/v, c = 3·10⁸ м/с (вакуумдегі жарық жылдамдығы)",
+                formulas: ["α = β (шағылу заңы)", "sinα / sinγ = n₂ / n₁", "n = c / v", "c = 3·10⁸ м/с"],
+                task: { q: "c=3·10⁸, v=2.25·10⁸. Сыну көрсеткіші?", ans: 1.33 },
+                tests: [
+                    { q: "Шағылу заңы бойынша не тең?", opts: ["α = β", "α + β = 90°", "sinα = n·sinβ", "α = 2β"], correct: 0 },
+                    { q: "Сыну көрсеткіші n = ... ?", opts: ["c/v", "v/c", "c·v", "c+v"], correct: 0 },
+                    { q: "Жарық жылдамдығы вакуумде?", opts: ["3·10⁸ м/с", "3·10⁶ м/с", "3·10¹⁰ м/с", "3·10⁵ м/с"], correct: 0 },
+                    { q: "Сыну кезінде не өзгереді?", opts: ["Жиілік", "Толқын ұзындығы", "Фаза", "Энергия"], correct: 1 },
+                    { q: "Толық ішкі шағылу шарты?", opts: ["α > α₀", "α < α₀", "α = 0", "β = 90°"], correct: 0 }
+                ]
+            },
+            {
+                name: "Линзалар",
+                theory: "• Оптикалық күш: D = 1/F (дптр)\n• Линза формуласы: 1/F = 1/d + 1/f\n• Үлкейту: Γ = f/d = H/h\n• Жинағыш линза (F>0), шашыратқыш линза (F<0)",
+                formulas: ["D = 1/F", "1/F = 1/d + 1/f", "Γ = f/d"],
+                task: { q: "F=0.25 м. Оптикалық күш? (дптр)", ans: 4 },
+                tests: [
+                    { q: "Оптикалық күштің өлшем бірлігі?", opts: ["Дптр", "Метр", "Ватт", "Джоуль"], correct: 0 },
+                    { q: "Линза формуласы?", opts: ["1/F = 1/d + 1/f", "F = d+f", "1/F = d+f", "F = 1/d+1/f"], correct: 0 },
+                    { q: "Жинағыш линзаның фокус аралығы?", opts: ["Оң", "Теріс", "Нөл", "Шексіз"], correct: 0 },
+                    { q: "Шашыратқыш линзаның D?", opts: ["D > 0", "D < 0", "D = 0", "D = ∞"], correct: 1 },
+                    { q: "F=0.5 м. D = ?", opts: ["0.5 дптр", "2 дптр", "1 дптр", "4 дптр"], correct: 1 }
+                ]
+            }
+        ]
+    },
+    "Термодинамика": {
+        topics: [
+            {
+                name: "Термодинамиканың 1-заңы",
+                theory: "• Ішкі энергия – молекулалардың кинетикалық және потенциалдық энергияларының қосындысы.\n• Термодинамиканың 1-заңы: ΔU = Q - A\n• Газ жұмысы: A = p·ΔV\n• Изобаралық процесте A = p·ΔV, изохоралықта A = 0",
+                formulas: ["ΔU = Q - A", "U = (3/2)·ν·R·T", "A = p·ΔV"],
+                task: { q: "Q=200 Дж, A=60 Дж, ΔU неге тең?", ans: 140 },
+                tests: [
+                    { q: "Термодинамиканың 1-заңы қандай заң?", opts: ["Энергия сақталу", "Импульс сақталу", "Масса сақталу", "Заряд сақталу"], correct: 0 },
+                    { q: "ΔU = Q - A. A не белгіленеді?", opts: ["Жылу", "Жұмыс", "Ішкі энергия", "Қысым"], correct: 1 },
+                    { q: "Изобаралық процесте газ жұмысы?", opts: ["pΔV", "0", "Q", "ΔU"], correct: 0 },
+                    { q: "Ішкі энергия ненің қосындысы?", opts: ["Кин.+потенц.", "Тек кинетикалық", "Тек потенциалдық", "Жылу+жұмыс"], correct: 0 },
+                    { q: "Адиабаталық процесте Q = ?", opts: ["0", "ΔU", "A", "pΔV"], correct: 0 }
+                ]
+            },
+            {
+                name: "Жылу мөлшері",
+                theory: "• Қыздыруға қажет жылу: Q = m·c·ΔT\n• Балқу/кристалдану: Q = λ·m\n• Булану/конденсация: Q = L·m\n• Жану: Q = q·m",
+                formulas: ["Q = m·c·ΔT", "Q = λ·m", "Q = L·m", "Q = q·m"],
+                task: { q: "m=2 кг, c=4200, ΔT=30°C. Q неге тең? (Дж)", ans: 252000 },
+                tests: [
+                    { q: "Қыздыруға қажет жылу формуласы?", opts: ["Q = mcΔT", "Q = λm", "Q = Lm", "Q = qm"], correct: 0 },
+                    { q: "Балқу жылуы қандай әріппен белгіленеді?", opts: ["λ", "L", "c", "q"], correct: 0 },
+                    { q: "Булану жылуы қай формула?", opts: ["Q = Lm", "Q = λm", "Q = mcΔT", "Q = qm"], correct: 0 },
+                    { q: "Меншікті жылусыйымдылық өлшем бірлігі?", opts: ["Дж/кг·°C", "Дж/кг", "Дж/°C", "Вт/кг"], correct: 0 },
+                    { q: "1 кг суды 1°C-қа қыздыру үшін қанша жылу керек? (c=4200)", opts: ["4200 Дж", "420 Дж", "42 Дж", "42000 Дж"], correct: 0 }
+                ]
+            }
+        ]
+    }
+};
+
+// Барлық формулаларды жинау
+let allFormulas = [];
+for (let m in modulesData) {
+    for (let t of modulesData[m].topics) {
+        for (let f of t.formulas) {
+            allFormulas.push({ module: m, topic: t.name, formula: f });
+        }
+    }
+}
+
+// ============ ПРОГРЕСС (LOCALSTORAGE) ============
+let progress = JSON.parse(localStorage.getItem("physics_progress")) || {};
+
+function isTopicCompleted(moduleName, topicName) {
+    return progress[moduleName] ? progress[moduleName].includes(topicName) : false;
+}
+
+function setTopicCompleted(moduleName, topicName, completed) {
+    if (!progress[moduleName]) progress[moduleName] = [];
+    if (completed && !progress[moduleName].includes(topicName)) {
+        progress[moduleName].push(topicName);
+    } else if (!completed) {
+        progress[moduleName] = progress[moduleName].filter(t => t !== topicName);
+    }
+    localStorage.setItem("physics_progress", JSON.stringify(progress));
+    renderModules();
+    updateGlobalProgress();
+}
+
+function resetProgress() {
+    if (confirm("Барлық прогресті нөлдеу керек пе? Бұл әрекетті қайтару мүмкін емес!")) {
+        progress = {};
+        localStorage.setItem("physics_progress", JSON.stringify(progress));
+        renderModules();
+        updateGlobalProgress();
+    }
+}
+
+function modulePercent(moduleName) {
+    let topics = modulesData[moduleName].topics;
+    let done = topics.filter(t => isTopicCompleted(moduleName, t.name)).length;
+    return topics.length ? Math.floor(done / topics.length * 100) : 0;
+}
+
+function globalPercent() {
+    let total = 0, done = 0;
+    for (let m in modulesData) {
+        total += modulesData[m].topics.length;
+        done += modulesData[m].topics.filter(t => isTopicCompleted(m, t.name)).length;
+    }
+    return total ? Math.floor(done / total * 100) : 0;
+}
+
+function updateGlobalProgress() {
+    let gp = globalPercent();
+    document.getElementById("globalFill").style.width = gp + "%";
+    document.getElementById("globalPercent").innerText = gp + "%";
+}
+
+function renderModules() {
+    let container = document.getElementById("modulesContainer");
+    if (!container) return;
+    let html = "";
+    for (let modName in modulesData) {
+        let percent = modulePercent(modName);
+        let modId = modName.replace(/\s/g, '');
+        html += `<div class="module-card">
+            <div class="module-title" onclick="toggleModule(this)">
+                <span>📚 ${modName}</span>
+                <span class="module-progress">${percent}%</span>
+            </div>
+            <div class="module-content" id="modContent_${modId}">`;
+        for (let i = 0; i < modulesData[modName].topics.length; i++) {
+            let topic = modulesData[modName].topics[i];
+            let completed = isTopicCompleted(modName, topic.name);
+            html += `<div class="topic">
+                <div class="topic-header" onclick="toggleTopic(this)">
+                    <span class="topic-title">📘 ${topic.name}</span>
+                    <input type="checkbox" class="topic-check" data-mod="${modName}" data-topic="${topic.name}" ${completed ? 'checked' : ''}>
+                </div>
+                <div class="topic-detail">
+                    <div class="theory">${topic.theory.replace(/\n/g, '<br>')}</div>
+                    <div><strong>📐 Формулалар:</strong>`;
+            for (let f of topic.formulas) {
+                html += `<div class="formula">📌 ${f}</div>`;
+            }
+            html += `</div><div><strong>✏️ Тапсырма:</strong>
+                    <div class="task">
+                        <p>${topic.task.q}</p>
+                        <input type="text" id="task_inp_${modName}_${i}" placeholder="Жауабыңыз">
+                        <button onclick="checkTask('${modName}', ${i}, '${topic.task.ans}')">Тексеру</button>
+                        <div id="task_fb_${modName}_${i}" class="feedback-error"></div>
+                    </div>
+                </div><div><strong>📝 Тест сұрақтары (5 сұрақ):</strong>`;
+            for (let t = 0; t < topic.tests.length; t++) {
+                let test = topic.tests[t];
+                html += `<div class="test">
+                    <p><strong>${t+1}. ${test.q}</strong></p>`;
+                for (let opt = 0; opt < test.opts.length; opt++) {
+                    html += `<label class="test-option">
+                        <input type="radio" name="test_${modName}_${i}_${t}" value="${opt}">
+                        ${String.fromCharCode(65+opt)}. ${test.opts[opt]}
+                    </label>`;
+                }
+                html += `<button onclick="checkTest('${modName}', ${i}, ${t}, ${test.correct})">Тексеру</button>
+                    <div id="test_fb_${modName}_${i}_${t}" class="feedback-error"></div>
+                </div>`;
+            }
+            html += `</div></div></div>`;
+        }
+        html += `</div></div>`;
+    }
+    container.innerHTML = html;
+    
+    document.querySelectorAll(".topic-check").forEach(cb => {
+        cb.addEventListener("change", function(e) {
+            e.stopPropagation();
+            let mod = this.getAttribute("data-mod");
+            let topic = this.getAttribute("data-topic");
+            setTopicCompleted(mod, topic, this.checked);
+        });
+    });
+}
+
+function renderFormulas() {
+    let container = document.getElementById("formulasList");
+    if (!container) return;
+    let html = "";
+    for (let f of allFormulas) {
+        html += `<div class="formula-item"><strong>${f.module} / ${f.topic}</strong><br>📌 ${f.formula}</div>`;
+    }
+    container.innerHTML = html;
+}
+
+window.toggleModule = function(el) {
+    let content = el.nextElementSibling;
+    if (content) content.style.display = content.style.display === "block" ? "none" : "block";
+};
+window.toggleTopic = function(el) {
+    let detail = el.parentElement.querySelector(".topic-detail");
+    if (detail) detail.style.display = detail.style.display === "block" ? "none" : "block";
+};
+window.checkTask = function(mod, topicIdx, correct) {
+    let input = document.getElementById(`task_inp_${mod}_${topicIdx}`);
+    let fb = document.getElementById(`task_fb_${mod}_${topicIdx}`);
+    if (!input || !fb) return;
+    let userVal = input.value.trim().toLowerCase();
+    let isOk = false;
+    if (!isNaN(correct) && !isNaN(userVal)) {
+        isOk = Math.abs(parseFloat(userVal) - parseFloat(correct)) < 0.01;
+    } else {
+        isOk = userVal === correct.toString().toLowerCase();
+    }
+    fb.innerHTML = isOk ? "✅ Дұрыс! Жарайсың!" : `❌ Қате. Дұрысы: ${correct}`;
+    fb.className = isOk ? "feedback-success" : "feedback-error";
+};
+window.checkTest = function(mod, topicIdx, testIdx, correct) {
+    let radios = document.getElementsByName(`test_${mod}_${topicIdx}_${testIdx}`);
+    let selected = null;
+    for (let i = 0; i < radios.length; i++) {
+        if (radios[i].checked) { selected = parseInt(radios[i].value); break; }
+    }
+    let fb = document.getElementById(`test_fb_${mod}_${topicIdx}_${testIdx}`);
+    if (selected === null) {
+        fb.innerHTML = "❌ Жауап таңдаңыз!";
+        fb.className = "feedback-error";
+        return;
+    }
+    let letters = ["A", "B", "C", "D"];
+    if (selected === correct) {
+        fb.innerHTML = "✅ Дұрыс! Жауабыңыз дұрыс!";
+        fb.className = "feedback-success";
+    } else {
+        fb.innerHTML = `❌ Қате. Дұрыс жауап: ${letters[correct]}`;
+        fb.className = "feedback-error";
+    }
+};
+
+function initCalc() {
+    let btn = document.getElementById("calcBtn");
+    let input = document.getElementById("calcInput");
+    let result = document.getElementById("calcResult");
+    if (btn) {
+        btn.onclick = function() {
+            try {
+                let res = eval(input.value);
+                result.innerHTML = "= " + res;
+            } catch(e) {
+                result.innerHTML = "Қате өрнек";
+            }
+        };
+    }
+}
+
+// Прогресті нөлдеу батырмасы
+document.getElementById("resetProgressBtn").onclick = resetProgress;
+
+// Бастау
+renderModules();
+renderFormulas();
+updateGlobalProgress();
+initCalc();
+</script>
+</body>
+</html>
